@@ -27,4 +27,12 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            echo "Pipeline for branch '${env.BRANCH_NAME}' executed successfully! 🎉"
+        }
+        failure {
+            echo "Pipeline for branch '${env.BRANCH_NAME}' failed. Please check the logs for details."
+        }
+    }
 }
