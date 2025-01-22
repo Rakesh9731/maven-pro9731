@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        any {
+        docker {
             image 'maven:3.9.0'
             args '-v /root/.m2:/root/.m2'
         }
@@ -12,22 +12,22 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn clean install -DskipTests'
             }
         }
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    // Running SonarQube analysis after the build
                     withSonarQubeEnv('SonarQube') {
                         sh 'mvn sonar:sonar -Dsonar.projectKey=simple-project -Dsonar.host.url=$SONARQUBE_SERVER -Dsonar.login=$SONARQUBE_TOKEN'
                     }
                 }
             }
         }
-        stage('Test') {
+        stage('Test and Coverage') {
             steps {
                 sh 'mvn test'
+                sh 'mvn verify' // Generates the JaCoCo report
             }
             post {
                 always {
