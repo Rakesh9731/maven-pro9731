@@ -1,18 +1,23 @@
 pipeline {
     agent {
-        any {
+        docker {
             image 'maven:3.9.0'
             args '-v /root/.m2:/root/.m2'
         }
     }
     environment {
-        SONARQUBE_SERVER = 'http://3.110.133.91:9000'
+        SONARQUBE_SERVER = 'http://3.110.31.171:9000'
         SONARQUBE_TOKEN = 'sqp_bfba95fa30b181608eb6d7952a7c65179872e1df'
     }
     stages {
         stage('Clean Workspace') {
             steps {
-                cleanWs() // Clean workspace to avoid leftover artifacts
+                cleanWs() // Clean up workspace
+            }
+        }
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Rakesh9731/maven-pro9731.git'
             }
         }
         stage('Build') {
@@ -34,10 +39,9 @@ pipeline {
                 }
             }
         }
-        stage('Test and Coverage') {
+        stage('Test') {
             steps {
                 sh 'mvn test'
-                sh 'mvn verify' // This generates the JaCoCo coverage report
             }
             post {
                 always {
@@ -48,7 +52,7 @@ pipeline {
     }
     post {
         success {
-            echo "Pipeline executed successfully! 🎉"
+            echo "Pipeline executed successfully!"
         }
         failure {
             echo "Pipeline failed. Please check the logs."
