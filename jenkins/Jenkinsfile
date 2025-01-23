@@ -6,8 +6,8 @@ pipeline {
         }
     }
     environment {
-        SONARQUBE_SERVER = 'http://13.235.128.161:9000' // Replace with your SonarQube server URL
-        SONARQUBE_TOKEN = 'sqp_bfba95fa39872e1df' // Replace with your SonarQube token
+        SONARQUBE_SERVER = 'http://3.110.133.91:9000' // Replace with your SonarQube server URL
+        SONARQUBE_TOKEN = 'sqp_bfba95fa30b181608eb6d7952a7c65179872e1df' // Replace with your SonarQube token
     }
     stages {
         stage('Build') {
