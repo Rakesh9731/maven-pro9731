@@ -6,7 +6,7 @@ pipeline {
         }
     }
     environment {
-        SONARQUBE_SERVER = '3.110.133.91:9000'
+        SONARQUBE_SERVER = 'http://3.110.133.91:9000'
         SONARQUBE_TOKEN = 'sqp_bfba95fa30b181608eb6d7952a7c65179872e1df'
     }
     stages {
