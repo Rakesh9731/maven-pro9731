@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         SONARQUBE_SERVER = 'http://3.109.143.45:9000'
-        SONARQUBE_TOKEN = 'sqp_75939c43874a0fa0599d5f49ffa7a671bd072d1d'
+        SONARQUBE_TOKEN = 'squ_40134d935a95c3f8cf791efe89c544bd99aa90da'
     }
     stages {
         stage('Clean Workspace') {
