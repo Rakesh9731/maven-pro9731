@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         SONARQUBE_SERVER = 'http://3.109.143.45:9000'
-        SONARQUBE_TOKEN = 'sqp_bfba95fa30b181608eb6d7952a7c65179872e1df'
+        SONARQUBE_TOKEN = 'sqp_75939c43874a0fa0599d5f49ffa7a671bd072d1d'
     }
     stages {
         stage('Clean Workspace') {
@@ -28,7 +28,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('SonarQube1') {
                         sh """
                         mvn sonar:sonar \
                             -Dsonar.projectKey=my-app \
