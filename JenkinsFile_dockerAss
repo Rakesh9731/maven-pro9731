@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy to QA') {
+            steps {
+                sh 'curl -u admin:password -T target/app.war http://tomcat-qa:8080/manager/text/deploy?path=/app'
+            }
+        }
+        stage('Manual Approval') {
+            steps {
+                input message: 'Deploy to Production?', ok: 'Deploy'
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                sh 'curl -u admin:password -T target/app.war http://tomcat-prod:8080/manager/text/deploy?path=/app'
+            }
+        }
+    }
+}
