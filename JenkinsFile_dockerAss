@@ -1,24 +1,29 @@
 pipeline {
     agent any
+
     stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
+
         stage('Deploy to QA') {
             steps {
-                sh 'curl -u admin:password -T target/app.war http://tomcat-qa:8080/manager/text/deploy?path=/app'
+                sh 'scp target/*.war user@tomcat-qa:/usr/local/tomcat/webapps/'
             }
         }
-        stage('Manual Approval') {
+
+        stage('Deploy to Prod') {
             steps {
-                input message: 'Deploy to Production?', ok: 'Deploy'
-            }
-        }
-        stage('Deploy to Production') {
-            steps {
-                sh 'curl -u admin:password -T target/app.war http://tomcat-prod:8080/manager/text/deploy?path=/app'
+                input 'Deploy to production?'
+                sh 'scp target/*.war user@tomcat-prod:/usr/local/tomcat/webapps/'
             }
         }
     }
